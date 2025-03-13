@@ -1,7 +1,16 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { AudioLines, Moon, Sun } from 'lucide-react';
-import React, { useState } from 'react';
+import { ThemeProvider } from "@/components/theme-provider"
+import { ArrowDown10Icon, AudioLines } from 'lucide-react';
+import { Terminal } from "lucide-react"
+ import {ModeToggle} from './components/mode-toggle'
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 function App() {
+
     const [walletsData, setWalletsData] = useState([
         {
             wallet: 'LACE',
@@ -100,115 +109,65 @@ function App() {
     // }, []);
     let accent = 'rose';
     accent = 'amber';
+    accent = 'green';
     accent = 'rose';
     accent = 'blue';
-    accent = 'green';
 
-    const [mode, setMode] = useState('light');
-
-    const modeFuntion = () => {
-        if (mode === 'dark') {
-            setMode('light');
-        } else {
-            setMode('dark');
-        }
-    };
+    let 
+    mode="dark"
+    mode="light"
+ 
     return (
-        <div>
-            {mode === 'light' ? (
-                <div className="bg-slate-50  h-[100vh] text-gray-900 ">
-                    <header className="text-gray-900 bg-gray-100 body-font">
-                        <div className="   flex flex-wrap p-5   justify-between items-center">
-                            <a href="/" className="flex items-center text-gray-900  ">
-                                <img className="w-8" src="/cardanologo.svg" alt="cardano-logo" />
-                                <h1 className="ml-3 text-lg">Cardano wallets bird-eye view</h1>
-                            </a>
-                            <div className="flex gap-3">
-                                {' '}
-                                <button onClick={fetchBalances} className={` font-medium inline-flex items-center gap-1 text-sm py-2 px-5 text-sm bg-${accent}-600 text-${accent}-50  hover:bg-${accent}-800/90 rounded-full transition-all duration-400`}>
-                                    <AudioLines strokeWidth={2.5} size={14} />
-                                    Fetch
-                                </button>
-                                <button onClick={modeFuntion}>
-                                    <Sun strokeWidth={2} size={18} />
-                                </button>
-                            </div>
-                        </div>
-                    </header>
-
-                    {walletsData.map((item) => (
-                        <section key={item.wallet} className="text-gray-600 body-font transition-all duration-500 ">
-                            <div className="flex flex-col pt-2 px-4 mx-auto">
-                                <div className="h-full border-1 border-gray-300 rounded-lg overflow-hidden">
-                                    <div className="p-4  ">
-                                        <div className="flex gap-2 items-center">
-                                            <p className={`text-xs mt-1 tracking-wider text font-semibold text-${accent}-600`}>{item.wallet}</p>
-
-                                            <span className={`text-lg mono text font-medium text-${accent}-950`}>{item.balance}</span>
-                                        </div>
-                                        <button
-                                            className=" inline-flex gap-1 items-center pt-1 text-base  "
-                                            onClick={() => navigator.clipboard.writeText(String(item.address), console.log(`${item.wallet} address copied to clipboard\n${item.address}`))}>
-                                            <svg className="w-3 inline-flex mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-                                                <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
-                                            </svg>
-                                            <p className="mono text-xs">{item.address}</p>
-                                        </button>
-                                    </div>
-                                </div>
-                                {/* <hr className='text-gray-400/40' /> */}
-                            </div>
-                        </section>
-                    ))}
-                </div>
-            ) : (
-                <div className="bg-slate-950 h-[100vh] text-gray-600 ">
-                    <header className="text-gray-400 bg-gray-900 body-font">
-                        <div className="  flex flex-wrap justify-between p-5  items-center">
-                            <a href="/" className="flex items-center  text-gray-300  ">
-                                <img className="w-8" src="/cardanologo.svg" alt="cardano-logo" />
-                                <h1 className="ml-3 text-lg">Cardano wallets bird-eye view</h1>
-                            </a>
-
-                            <div className="flex gap-3">
-                                <button onClick={fetchBalances} className={` font-medium inline-flex items-center gap-1  py-2 px-5 text-sm bg-${accent}-400 text-${accent}-900   hover:bg-${accent}-300/90 rounded-full transition-all duration-400`}>
-                                    <AudioLines strokeWidth={2.5} size={14} />
-                                    Fetch
-                                </button>
-                                <button onClick={modeFuntion}>
-                                    <Moon strokeWidth={2} size={18} />
-                                </button>
-                            </div>
-                        </div>
-                    </header>
-
-                    {walletsData.map((item) => (
-                        <section key={item.wallet} className="text-gray-500 body-font transition-all duration-500 ">
-                            <div className="flex flex-col pt-2 px-4 mx-auto">
-                                <div className="h-full border-1 border-gray-800 rounded-lg overflow-hidden">
-                                    <div className="p-4  ">
-                                        <div className="flex gap-2 items-center">
-                                            <p className={`text-xs mt-1 tracking-wider text   font-semibold text-${accent}-500`}>{item.wallet}</p>
-
-                                            <span className={`text-lg mono text font-medium text-${accent}-100`}>{item.balance}</span>
-                                        </div>
-                                        <button
-                                            className=" inline-flex gap-1 items-center pt-1 text-base  "
-                                            onClick={() => navigator.clipboard.writeText(String(item.address), console.log(`${item.wallet} address copied to clipboard\n${item.address}`))}>
-                                            <svg className="w-3 inline-flex mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-                                                <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
-                                            </svg>
-                                            <p className="mono text-xs">{item.address}</p>
-                                        </button>
-                                    </div>
-                                </div>
-                                {/* <hr className='text-gray-400/40' /> */}
-                            </div>
-                        </section>
-                    ))}
-                </div>
-            )}
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <header>
+         
+           <ModeToggle/>
+          </header>
+        <div >
+        <div className="bg-background h-screen text-foreground">
+    <header className="text-foreground bg-muted body-font">
+        <div className="flex flex-wrap p-5 justify-between items-center">
+            <a href="/" className="flex items-center text-foreground">
+                <img className="w-8 mr-2" src="/cardanologo.svg" alt="cardano-logo" />
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                    Cardano wallets
+                </h4>
+            </a>
+            <button onClick={fetchBalances} className={`inline-flex items-center gap-1 py-3 px-6 text bg-${accent}-600 text-${accent}-50 font-semibold hover:bg-${accent}-800/90 rounded-full transition-all duration-400`}>
+                <AudioLines strokeWidth={2.5} size={16} />
+                Fetch
+            </button>
         </div>
+    </header>
+
+    {walletsData.map((item) => (
+        <section key={item.wallet} className="text-muted-foreground body-font transition-all duration-500">
+            <div className="flex flex-col pt-2 px-4 mx-auto">
+                <div className="h-full border border-border rounded-lg overflow-hidden">
+                    <div className="p-4">
+                        <div className="flex gap-2 items-center">
+                            <p className={`text-xs mt-1 tracking-wider text font-semibold text-${accent}-600`}>{item.wallet}</p>
+                            <span className={`text-lg mono text font-medium text-${accent}-950`}>{item.balance}</span>
+                        </div>
+                        <button className="inline-flex gap-1 items-center pt-1 text-base" onClick={() => navigator.clipboard.writeText(String(item.address), console.log(`${item.wallet} address copied to clipboard\n${item.address}`))}>
+                            <svg className="w-3 inline-flex mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                                <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
+                            </svg>
+                            <p className="mono text-xs">{item.address}</p>
+                        </button>
+                    </div>
+                </div>
+                {/* <hr className='text-gray-400/40' /> */}
+            </div>
+        </section>
+    ))}
+</div>
+                  
+          
+ 
+ 
+        </div>
+        </ThemeProvider>
     );
 }
 

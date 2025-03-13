@@ -1,3 +1,4 @@
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 @import url(https://fonts.googleapis.com/css?family=Urbanist:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
@@ -23,13 +24,13 @@ h1,h2,h3,h4,h5,h6{
   font-family: "Plus Jakarta Sans";
   font-family: "Manrope";
   font-weight: 600;
-  
+
 }
 
 .mono{
-  font-family: "Roboto Mono";
   font-family: "JetBrains Mono";
+  font-family: "Roboto Mono";
   font-family: "Geist Mono";
   font-weight: 400;
-  
+
 }
